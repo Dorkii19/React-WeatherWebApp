@@ -10,32 +10,33 @@ class App extends React.Component {
       hasAnyError: false,
       errorText: '',
     };
-
     this.onClickWarning = this.onClickWarning.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   onClickWarning() {
-    this.setState({
-      hasAnyError: false
-    })
+    this.setState({ hasAnyError: false })
   }
 
   handleInputChange(e) {
-    this.setState({
-      cepValue: e.target.value
-    })
+    let value = e.target.value;
+    // Verifica se é um numero
+    if (value % 1 === 0){
+      this.setState({ cepValue: value })
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    if(this.state.cepValue === 0 || this.state.cepValue > 11) {
+    if(this.state.cepValue === '') {
       this.setState({
         hasAnyError: true,
-        errorText: 'Seu CEP deve ter entre 0 e 12 caracteres!',
+        errorText: 'O CEP não pode ser vazio!',
+        cepValue: ''
       })
+    } else {
+      console.log("ok");
     }
   }
 
@@ -44,8 +45,8 @@ class App extends React.Component {
       <Container>
           { this.state.hasAnyError &&
             <Warning 
-            onClickWarning={this.onClickWarning}
-            text={this.state.errorText}
+              onClickWarning={this.onClickWarning}
+              text={this.state.errorText}
             />
           }
           <Titulo>Bem vindo ao Weather App</Titulo>
@@ -53,7 +54,7 @@ class App extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <FormInput 
               placeholder="Digite seu CEP" 
-              maxLength="8" 
+              maxLength="11" 
               value={this.state.cepValue} 
               onChange={this.handleInputChange}              
               />
@@ -61,7 +62,7 @@ class App extends React.Component {
           </form>
       </Container>
     );
-}
+  }
 }
 
 export default App;
