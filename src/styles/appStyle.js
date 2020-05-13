@@ -5,9 +5,13 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    background: #202020;
+    background: ${ props => props.backgroundColor };
     min-height: 670px;
+    min-width: 400px; 
+
+    @media (max-width: 768px) { 
+       padding: 10px;
+    }
 `;
 
 export const Titulo = styled.h1`
@@ -33,7 +37,7 @@ export const Texto = styled.p`
 `;
 
 export const Button = styled.button`
-    background: #fe921f;
+    background: #8685EF;
     color: #fff;
     border: 0;
     outline: 0;
@@ -44,7 +48,7 @@ export const Button = styled.button`
     transition: 0.5s;
 
     &:hover{
-        background: #D16D00;
+        background: #6467CD;
     }
 `;
 

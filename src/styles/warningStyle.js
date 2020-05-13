@@ -21,6 +21,7 @@ export const CloseButton = styled.button`
     font-size: 9px;
     color: #adb7bd; 
     text-align: right;
+    cursor: pointer;
 `;
 
 export const WarningText = styled.p`
