@@ -69,11 +69,3 @@ export const Footer = styled.div`
     margin-top: -20px;
     align-self: flex-start;
 `; 
-
-export const Button = styled.button`
-    background: transparent;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    color: #8685EF;
-`;

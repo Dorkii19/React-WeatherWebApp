@@ -5,15 +5,14 @@ import Card from './components/card';
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCloudShowersHeavy, faCloud, faSun, faSnowflake } from '@fortawesome/free-solid-svg-icons';
-library.add(faCloudShowersHeavy, faCloud, faSun, faSnowflake)
+import { faCloudRain, faCloud, faSun, faSnowflake } from '@fortawesome/free-solid-svg-icons';
+library.add(faCloudRain, faCloud, faSun, faSnowflake);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.cardRef = React.createRef();
     this.state = {
-      cepValue: '',
+      cityValue: '',
       errorText: '',
       hasAnyError: false,
       hasSubmited: false,
@@ -34,46 +33,42 @@ class App extends React.Component {
 
   handleInputChange(e) {
     let value = e.target.value;
-    // Verifica se é um numero
-    if (value % 1 === 0){
-      this.setState({ cepValue: value })
-    }
+      this.setState({ cityValue: value })
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    if(this.state.cepValue === '') {
+    if(this.state.cityValue === '') {
       this.setState({
         hasAnyError: true,
-        errorText: 'O CEP não pode ser vazio!',
-        cepValue: ''
+        errorText: 'O campo não pode ser vazio!',
+        cityValue: ''
       }); 
     } else {
-      const cep = {cep: this.state.cepValue};
+      let cidade = {cidade: this.state.cityValue};
       fetch('http://localhost:3001/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(cep),
+        body: JSON.stringify(cidade),
       })
       .then(response => response.json())
       .then(data => {
-        this.setState({ 
-          cepValue: '',
-          hasSubmited: true,
-          cidade: '',
-          data: '',
-          tempo: '',
-          temperatura: '',
-          unidade: '',
-        });
-        window.scrollBy(0, 670);
+          this.setState({ 
+            hasSubmited: true,
+            cidade: this.state.cityValue,
+            data: data.data,
+            tempo: data.tempo,
+            temperatura: data.temperatura,
+            unidade: data.unidade,
+          });
+            window.scrollBy(0, 670);
       })
       .catch((error) => {
         this.setState({
           hasAnyError: true,
-          errorText: 'Houve um erro, verifique seu CEP e tente novamente'
+          errorText: 'Houve um erro. Verifique a cidade digitada e tente novamente'
         })
       });
     }
@@ -82,22 +77,20 @@ class App extends React.Component {
   render(){
     return (
       <div>
-
         <Container backgroundColor="#202020" id="card">
             { this.state.hasAnyError &&
               <Warning 
-                onClickWarning={this.onClickWarning}
-                text={this.state.errorText}
+                onClickWarning={ this.onClickWarning }
+                text={ this.state.errorText }
               />
             }
             <Titulo>Bem vindo ao Weather App</Titulo>
-            <Texto>Digite seu CEP abaixo para ver a previsão do tempo para sua cidade (Brasil)</Texto>
-            <form onSubmit={this.handleSubmit}>
+            <Texto>Digite o nome da sua cidade abaixo para ver a previsão do tempo (Brasil)</Texto>
+            <form onSubmit={ this.handleSubmit }>
               <FormInput 
-                placeholder="Digite seu CEP" 
-                maxLength="11" 
-                value={this.state.cepValue} 
-                onChange={this.handleInputChange}              
+                placeholder="Digite sua Cidade" 
+                value={ this.state.cityValue } 
+                onChange={ this.handleInputChange }              
                 />
               <Button type="submit">Ver</Button>
             </form>
@@ -107,13 +100,13 @@ class App extends React.Component {
         <Container backgroundColor="linear-gradient(to bottom, #202020, #282828, #303030)">
           { this.state.hasSubmited ?
             <Card 
-              cidade={this.state.cidade}
-              data={this.state.data}
-              tempo={this.state.tempo}
-              temperatura={this.state.temperatura}
-              unidade={this.state.unidade}
+              cidade={ this.state.cidade }
+              data={ this.state.data }
+              tempo={ this.state.tempo }
+              temperatura={ this.state.temperatura }
+              unidade={ this.state.unidade }
             /> :
-            <Titulo>Aguardando CEP...</Titulo> 
+            <Titulo>Aguardando entrada...</Titulo> 
           }
         </Container>
       </div>
