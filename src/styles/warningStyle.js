@@ -9,7 +9,19 @@ export const WarningContainer = styled.div`
     min-width: 70px;
     padding: 10px;
     border: .3px solid #1F1B24;
+    animation: showAnimation .5s ease-in-out;
+
+    @keyframes showAnimation {
+        from {
+            transform: translate(-120px,0px);
+        }
+        to {
+            transform: translate(0px,0px);
+        }
+    }
 `;
+
+
 
 export const CloseButton = styled.button`
     position: absolute;

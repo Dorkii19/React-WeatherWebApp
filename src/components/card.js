@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Card(props) {
     return(
+        // °C °F
         <div className="cardWrap">
             <Container backgroundColor= "#F1F1F1">
                 <div className="titleWrap">
-                    <Titulo>Sao borja</Titulo>
-                    <Subtitulo>Quarta, 18:58 PM,  <span>Nublado</span></Subtitulo>
+                    <Titulo>{props.cidade}</Titulo>
+                    <Subtitulo>{props.data},  <span>{props.tempo}</span></Subtitulo>
                 </div>
                 <div className="contentWrap">
                     <Destaque>
-                    38<span className="graus">°C</span>
+                    {props.temperatura}<span className="graus">{props.unidade}</span>
                     <span className="icone"><FontAwesomeIcon icon="cloud"/></span>
                     </Destaque>
                 </div>
@@ -20,12 +21,6 @@ function Card(props) {
                     <Button>Ver mais</Button>
                     <hr></hr>
                 </Footer>
-                {/* <Titulo></Titulo> 
-                    <Data></Data><Tipo>
-                    <Temperatura> <Icone>
-                    <Botao expandir embaixo para ver mais dias>
-                */}
-                {/*  */}
             </Container>
         </div>
     );
